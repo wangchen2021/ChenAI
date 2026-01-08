@@ -1,13 +1,15 @@
 {
   "name": "chen_ai",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": "true",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "install:all": "pnpm install --recursive",
-    "git:commit": "git add . && cz"
+    "git:commit": "git add . && cz",
+    "git:push": "git push",
+    "release": "release-it"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +23,10 @@
   "devDependencies": {
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-angular": "^20.3.1",
+    "@release-it/bumper": "^7.0.5",
+    "@release-it/conventional-changelog": "^10.0.4",
     "commitizen": "^4.3.1",
-    "cz-conventional-changelog": "^3.3.0"
+    "cz-conventional-changelog": "^3.3.0",
+    "release-it": "^19.2.3"
   }
 }

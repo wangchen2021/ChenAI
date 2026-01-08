@@ -1,31 +1,37 @@
 {
   "name": "@chen/shared",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "企业级共享包：公共常量、类型（支持 ESM/CJS 双模块）",
-  "type": "module", 
-  "main": "./dist/index.mjs", 
-  "module": "./dist/index.mjs", 
-  "types": "./dist/index.d.ts", 
-  "exports": { 
+  "type": "module",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
     ".": {
-      "types": "./dist/index.d.ts", 
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   },
-  "files": [ 
+  "files": [
     "dist",
     "README.md"
   ],
   "scripts": {
-    "build": "tsup", 
+    "build": "tsup",
     "dev": "tsup --watch"
   },
   "engines": {
     "node": ">=16.0.0"
   },
-  "keywords": ["shared", "constants", "types", "esm", "cjs"],
+  "keywords": [
+    "shared",
+    "constants",
+    "types",
+    "esm",
+    "cjs"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {

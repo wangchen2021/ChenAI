@@ -2,8 +2,8 @@ name: Frontend Auto Deploy to Tencent Cloud (BtPanel)
 run-name: ${{ github.actor }} 正在通过宝塔部署 pnpm+Vite 项目 🚀
 on:
   # 核心：仅监听 main 分支的 Release 发布事件
-  release:
-    types: [published] # 仅当 Release 被「发布」（而非草稿/删除）时触发
+  # release:
+  #   types: [published] # 仅当 Release 被「发布」（而非草稿/删除）时触发
 
 jobs:
   Deploy-to-Tencent-Cloud-Bt:
