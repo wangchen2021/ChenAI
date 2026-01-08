@@ -1,0 +1,75 @@
+name: Frontend Auto Deploy to Tencent Cloud (BtPanel)
+run-name: ${{ github.actor }} 正在通过宝塔部署 pnpm+Vite 项目 🚀
+on:
+  # 核心：仅监听 main 分支的 Release 发布事件
+  release:
+    types: [published] # 仅当 Release 被「发布」（而非草稿/删除）时触发
+
+jobs:
+  Deploy-to-Tencent-Cloud-Bt:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 该任务由 ${{ github.event_name }} 事件自动触发."
+      - run: echo "🐧 当前运行在 GitHub 托管的 ${{ runner.os }} 服务器上!"
+      - run: echo "🔎 当前分支是 ${{ github.ref }}，仓库名称是 ${{ github.repository }}."
+
+      # 步骤1：拉取仓库代码
+      - name: Check out repository code
+        uses: actions/checkout@v5
+      - run: echo "💡 ${{ github.repository }} 仓库已克隆到运行器."
+
+      # 步骤2：安装 pnpm（GitHub 运行器默认无 pnpm，需手动安装）
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: '10.20.0'
+      - run: echo "📦 pnpm 包管理器安装完成."
+
+      # 步骤3：安装 Node.js 环境
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.11.0'
+          cache: 'pnpm'
+
+      # 步骤4：用 pnpm 安装项目依赖
+      - name: Install Project Dependencies
+        run: pnpm install-all
+      - run: echo "🖥️ 项目依赖安装完成，准备构建."
+
+      # 步骤5：用 pnpm 构建 Vite 项目
+      - name: Build Vite Project
+        run: pnpm build-client
+        env:
+          NODE_ENV: production
+          # 自定义环境变量（如接口地址）：VITE_API_URL=${{ secrets.VITE_API_URL }}
+      - run: echo "🏗️ Vite 项目构建完成，生成 dist 静态目录."
+
+      # 步骤6：查看构建产物（可选，调试用）
+      - name: List Build Files
+        run: ls ${{ github.workspace }}/client/dist
+      - run: echo "📂 已验证 dist 目录结构."
+
+      # 步骤7：上传 dist 目录到宝塔服务器（路径需对应宝塔站点目录）
+      - name: Upload Files to Tencent Cloud (BtPanel)
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.TENCENT_SERVER_HOST }} # 腾讯云服务器公网IP
+          username: ${{ secrets.TENCENT_SERVER_USER }} # 服务器登录账号（如 root）
+          key: ${{ secrets.TENCENT_SERVER_SSH_KEY }} # SSH 私钥
+          port: ${{ secrets.TENCENT_SERVER_PORT }} # SSH 端口
+          source: "${{ github.workspace }}/client/dist/*"
+          strip_components: 7
+          target: "/www/wwwroot/version_web"
+          overwrite: true # 覆盖原有文件
+
+      # 步骤8：重启 Nginx（宝塔环境通用命令，无需区分系统）
+      - name: Restart Nginx in BtPanel
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.TENCENT_SERVER_HOST }}
+          username: ${{ secrets.TENCENT_SERVER_USER }}
+          key: ${{ secrets.TENCENT_SERVER_SSH_KEY }}
+          port: ${{ secrets.TENCENT_SERVER_PORT }}
+          script: /etc/init.d/nginx restart # 宝塔面板 Nginx 重启专用命令
+      - run: echo "✅ pnpm+Vite 项目已成功部署到宝塔服务器！任务状态：${{ job.status }}."

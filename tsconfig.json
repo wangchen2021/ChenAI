@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@chen/shared": ["packages/shared/src/index.ts"],
+      "@chen/shared/*": ["packages/shared/src/*"]
+    },
+    "skipLibCheck": true // 跳过第三方类型检查（避免冲突）
+  },
+}
