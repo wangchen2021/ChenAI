@@ -1,6 +1,6 @@
-import type React from 'react'
-import NormalizeStyles from './styles/NormalizeStyles';
-import AIChat from './components/AIChat';
+import type React from "react";
+import NormalizeStyles from "./styles/NormalizeStyles";
+import AIChat from "./components/AIChat";
 
 const App: React.FC = () => {
   return (
@@ -8,7 +8,7 @@ const App: React.FC = () => {
       <NormalizeStyles></NormalizeStyles>
       <AIChat></AIChat>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

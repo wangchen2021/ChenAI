@@ -5,6 +5,6 @@ import { OpenAiController } from './open-ai.controller';
 @Module({
   controllers: [OpenAiController],
   providers: [OpenAiService],
-  exports:[OpenAiService] //共享模块
+  exports: [OpenAiService], //共享模块
 })
 export class OpenAiModule {}

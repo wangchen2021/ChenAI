@@ -16,7 +16,10 @@ import { UtilsModule } from './common/utils/utils.module';
   imports: [
     ConfigModule.forRoot({
       // 加载对应环境的配置文件
-      envFilePath: path.resolve(process.cwd(), `src/config/env/.env.${process.env.NODE_ENV || 'development'}`),
+      envFilePath: path.resolve(
+        process.cwd(),
+        `src/config/env/.env.${process.env.NODE_ENV || 'development'}`,
+      ),
       // 启用全局配置（所有模块可注入 ConfigService）
       isGlobal: true,
       // 配置校验规则
@@ -33,7 +36,7 @@ import { UtilsModule } from './common/utils/utils.module';
     LogsService,
     AppService,
     { provide: APP_FILTER, useClass: GlobalExceptionFilter },
-    { provide: APP_INTERCEPTOR, useClass: ResponseInterceptor }
+    { provide: APP_INTERCEPTOR, useClass: ResponseInterceptor },
   ],
 })
-export class AppModule { }
+export class AppModule {}

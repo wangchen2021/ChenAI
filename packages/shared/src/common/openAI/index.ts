@@ -1,3 +1,3 @@
 export interface getAIStreamResReqParams {
-    text: string
+  text: string;
 }

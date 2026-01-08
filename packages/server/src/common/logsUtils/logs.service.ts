@@ -50,7 +50,12 @@ export class LogsService implements LoggerService {
   /**
    * 错误日志（包含堆栈信息）
    */
-  error(message: string, trace = '', context = 'APP', meta?: Record<string, any>) {
+  error(
+    message: string,
+    trace = '',
+    context = 'APP',
+    meta?: Record<string, any>,
+  ) {
     this.logMessage('error', message, context, {
       ...meta,
       stack: trace,
@@ -60,7 +65,12 @@ export class LogsService implements LoggerService {
   /**
    * 致命错误日志
    */
-  fatal(message: string, trace = '', context = 'APP', meta?: Record<string, any>) {
+  fatal(
+    message: string,
+    trace = '',
+    context = 'APP',
+    meta?: Record<string, any>,
+  ) {
     this.logMessage('fatal', message, context, {
       ...meta,
       stack: trace,
@@ -70,7 +80,12 @@ export class LogsService implements LoggerService {
   /**
    * 请求日志（带请求ID）
    */
-  request(message: string, requestId: string, context = 'HTTP', meta?: Record<string, any>) {
+  request(
+    message: string,
+    requestId: string,
+    context = 'HTTP',
+    meta?: Record<string, any>,
+  ) {
     this.logMessage('info', message, context, {
       ...meta,
       requestId,

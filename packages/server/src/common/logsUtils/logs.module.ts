@@ -15,29 +15,34 @@ const timestampFormat = winston.format.timestamp({
 const consoleFormat = winston.format.combine(
   timestampFormat,
   winston.format.colorize({ all: false }), // 只给级别上色
-  winston.format.printf(({ timestamp, level, context, message, stack, requestId, ...meta }) => {
-    // 基础日志模板
-    let logStr = `[${timestamp}] [${level}] [${context || 'APP'}]`;
-    
-    // 添加请求ID
-    if (requestId) logStr += ` [REQ:${requestId}]`;
-    
-    // 添加核心消息
-    logStr += ` ${message}`;
-    
-    // 添加其他元数据
-    const metaStr = Object.keys(meta).length 
-      ? ` | Meta: ${JSON.stringify(meta, null, 2)}` 
-      : '';
-    logStr += metaStr;
-    
-    // 修复核心：先校验stack类型，确保是字符串且非空
-    if (stack && typeof stack === 'string' && stack.trim()) {
-      logStr += `\n└─ Stack Trace:\n${stack.split('\n').map(line => `  ${line}`).join('\n')}`;
-    }
-    
-    return logStr;
-  }),
+  winston.format.printf(
+    ({ timestamp, level, context, message, stack, requestId, ...meta }) => {
+      // 基础日志模板
+      let logStr = `[${timestamp}] [${level}] [${context || 'APP'}]`;
+
+      // 添加请求ID
+      if (requestId) logStr += ` [REQ:${requestId}]`;
+
+      // 添加核心消息
+      logStr += ` ${message}`;
+
+      // 添加其他元数据
+      const metaStr = Object.keys(meta).length
+        ? ` | Meta: ${JSON.stringify(meta, null, 2)}`
+        : '';
+      logStr += metaStr;
+
+      // 修复核心：先校验stack类型，确保是字符串且非空
+      if (stack && typeof stack === 'string' && stack.trim()) {
+        logStr += `\n└─ Stack Trace:\n${stack
+          .split('\n')
+          .map((line) => `  ${line}`)
+          .join('\n')}`;
+      }
+
+      return logStr;
+    },
+  ),
 );
 
 // ---- 优化文件日志格式化（JSON结构化）----
