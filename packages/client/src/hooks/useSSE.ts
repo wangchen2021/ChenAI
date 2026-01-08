@@ -1,5 +1,5 @@
-import { useCallback, useRef, useState } from "react";
-import { baseURL } from "../api/request";
+import { useCallback, useRef, useState } from 'react';
+import { baseURL } from '../api/request';
 
 // 修正类型定义（使用 TypeScript 严格类型）
 export interface UseSSEOptions {
@@ -18,33 +18,30 @@ export function useSSE() {
   const [isStreaming, setIsStreaming] = useState(false);
 
   // 解析 SSE 数据的核心函数
-  const parseSSE = useCallback(
-    (data: string, onChunk: (chunk: string) => void): boolean => {
-      const lines = data.split("\n");
-      let isDone = false;
+  const parseSSE = useCallback((data: string, onChunk: (chunk: string) => void): boolean => {
+    const lines = data.split('\n');
+    let isDone = false;
 
-      for (const line of lines) {
-        const trimmed = line.trim();
-        if (!trimmed.startsWith("data: ")) continue;
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed.startsWith('data: ')) continue;
 
-        const jsonStr = trimmed.slice(6);
-        if (jsonStr === "[DONE]") {
-          isDone = true;
-          break;
-        }
-
-        try {
-          const parsed = JSON.parse(jsonStr);
-          const content = parsed.content || "";
-          content.length > 0 && onChunk(content);
-        } catch (e) {
-          console.error("解析 SSE 数据失败:", e);
-        }
+      const jsonStr = trimmed.slice(6);
+      if (jsonStr === '[DONE]') {
+        isDone = true;
+        break;
       }
-      return isDone;
-    },
-    [],
-  );
+
+      try {
+        const parsed = JSON.parse(jsonStr);
+        const content = parsed.content || '';
+        content.length > 0 && onChunk(content);
+      } catch (e) {
+        console.error('解析 SSE 数据失败:', e);
+      }
+    }
+    return isDone;
+  }, []);
 
   // 发送请求的核心方法（返回 Promise）
   const sendRequest = useCallback(
@@ -59,15 +56,15 @@ export function useSSE() {
       setIsStreaming(true);
 
       // 缓冲区定义在循环外部（关键修复）
-      let buffer = "";
+      let buffer = '';
       const decoder = new TextDecoder();
 
       try {
         const response = await fetch(baseURL + url, {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
-            Accept: "text/event-stream",
+            'Content-Type': 'application/json',
+            Accept: 'text/event-stream',
             ...options.headers,
           },
           body: JSON.stringify(body),
@@ -75,12 +72,10 @@ export function useSSE() {
         });
 
         if (!response.ok) {
-          throw new Error(
-            `HTTP Error: ${response.status} ${response.statusText}`,
-          );
+          throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
         }
         if (!response.body) {
-          throw new Error("响应体为空，无法读取流式数据");
+          throw new Error('响应体为空，无法读取流式数据');
         }
 
         const reader = response.body.getReader();
@@ -101,7 +96,7 @@ export function useSSE() {
           buffer += decoder.decode(value, { stream: true });
 
           // 按换行分割处理
-          const boundaryIndex = buffer.lastIndexOf("\n");
+          const boundaryIndex = buffer.lastIndexOf('\n');
           if (boundaryIndex !== -1) {
             const processData = buffer.substring(0, boundaryIndex);
             buffer = buffer.substring(boundaryIndex); // 保留未处理的部分
@@ -119,7 +114,7 @@ export function useSSE() {
       } catch (err) {
         const error = err as Error;
         // 忽略主动取消的错误
-        if (error.name !== "AbortError") {
+        if (error.name !== 'AbortError') {
           console.error(`SSE 请求失败: ${error.message}`);
           options.onError?.(error);
         }

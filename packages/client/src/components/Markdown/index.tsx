@@ -1,10 +1,10 @@
 // src/components/MarkdownRenderer/MarkdownRenderer.tsx
-import React from "react";
-import ReactMarkdown from "react-markdown";
-import "github-markdown-css"; // 引入 GitHub 样式
-import rehypeHighlight from "rehype-highlight"; // 代码高亮（可选）
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import 'github-markdown-css'; // 引入 GitHub 样式
+import rehypeHighlight from 'rehype-highlight'; // 代码高亮（可选）
 // 1. 替换为 dark 模式的高亮样式
-import "highlight.js/styles/github-dark.css"; // 暗黑模式代码高亮样式
+import 'highlight.js/styles/github-dark.css'; // 暗黑模式代码高亮样式
 
 interface MarkdownRendererProps {
   content: string; // MD 文本（支持增量更新）
@@ -15,18 +15,15 @@ interface MarkdownRendererProps {
  * 优雅渲染 Markdown 的通用组件
  * 支持流式增量渲染（适配 AI 流式输出）
  */
-const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
-  content,
-  className = "",
-}) => {
+const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className = '' }) => {
   return (
     <div
       className={`markdown-body ${className}`}
       style={{
-        fontSize: "14px",
-        lineHeight: "1.7",
-        color: "#24292f",
-        padding: "0", // 取消默认 padding，由外层容器控制
+        fontSize: '14px',
+        lineHeight: '1.7',
+        color: '#24292f',
+        padding: '0', // 取消默认 padding，由外层容器控制
         // 可选：如果需要整体暗黑模式，可添加背景色
         // backgroundColor: '#18181b',
         // color: '#e4e4e7',
@@ -57,12 +54,12 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           h2: ({ children }) => (
             <h2
               style={{
-                fontSize: "18px",
+                fontSize: '18px',
                 fontWeight: 600,
-                margin: "16px 0 8px",
-                color: "#111827",
-                borderBottom: "1px solid #e5e7eb",
-                paddingBottom: "4px",
+                margin: '16px 0 8px',
+                color: '#111827',
+                borderBottom: '1px solid #e5e7eb',
+                paddingBottom: '4px',
               }}
             >
               {children}
@@ -71,10 +68,10 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           h3: ({ children }) => (
             <h3
               style={{
-                fontSize: "16px",
+                fontSize: '16px',
                 fontWeight: 600,
-                margin: "12px 0 6px",
-                color: "#111827",
+                margin: '12px 0 6px',
+                color: '#111827',
               }}
             >
               {children}
@@ -83,9 +80,9 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           ul: ({ children }) => (
             <ul
               style={{
-                margin: "8px 0",
-                paddingLeft: "20px",
-                listStyle: "disc",
+                margin: '8px 0',
+                paddingLeft: '20px',
+                listStyle: 'disc',
               }}
             >
               {children}
@@ -94,7 +91,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           li: ({ children }) => (
             <li
               style={{
-                margin: "4px 0",
+                margin: '4px 0',
               }}
             >
               {children}
@@ -103,7 +100,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           strong: ({ children }) => (
             <strong
               style={{
-                color: "#111827",
+                color: '#111827',
                 fontWeight: 600,
               }}
             >
@@ -113,7 +110,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           p: ({ children }) => (
             <p
               style={{
-                margin: "8px 0",
+                margin: '8px 0',
               }}
             >
               {children}

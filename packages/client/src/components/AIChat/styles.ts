@@ -1,5 +1,5 @@
-import styled, { createGlobalStyle } from "styled-components";
-import { rgba } from "polished";
+import styled, { createGlobalStyle } from 'styled-components';
+import { rgba } from 'polished';
 
 // 全局样式重置（仅作用于当前组件）
 export const AIChatGlobalStyle = createGlobalStyle`
@@ -19,12 +19,12 @@ export const AIChatGlobalStyle = createGlobalStyle`
   }
   
   ::-webkit-scrollbar-thumb {
-    background-color: ${rgba("#6366F1", 0.3)};
+    background-color: ${rgba('#6366F1', 0.3)};
     border-radius: 3px;
   }
   
   ::-webkit-scrollbar-track {
-    background-color: ${rgba("#E5E7EB", 0.5)};
+    background-color: ${rgba('#E5E7EB', 0.5)};
   }
 `;
 
@@ -37,7 +37,7 @@ export const ChatContainer = styled.div`
   margin: 0 auto;
   background-color: #f9fafb;
   border-radius: 8px;
-  box-shadow: 0 0 20px ${rgba("#000", 0.05)};
+  box-shadow: 0 0 20px ${rgba('#000', 0.05)};
   overflow: hidden;
 `;
 
@@ -49,7 +49,7 @@ export const ChatHeader = styled.header`
   padding: 16px 24px;
   background-color: #6366f1;
   color: white;
-  box-shadow: 0 2px 8px ${rgba("#000", 0.1)};
+  box-shadow: 0 2px 8px ${rgba('#000', 0.1)};
 
   h1 {
     font-size: 18px;
@@ -69,7 +69,7 @@ export const ChatHeader = styled.header`
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: ${rgba("#fff", 0.1)};
+      background-color: ${rgba('#fff', 0.1)};
     }
   }
 `;
@@ -119,7 +119,7 @@ export const MessageBubble = styled.div<{ $isUser: boolean }>`
   padding: 12px 16px;
   border-radius: 12px;
   position: relative;
-  align-self: ${(props) => (props.$isUser ? "flex-end" : "flex-start")};
+  align-self: ${(props) => (props.$isUser ? 'flex-end' : 'flex-start')};
 
   // 用户消息
   ${(props) =>
@@ -138,7 +138,7 @@ export const MessageBubble = styled.div<{ $isUser: boolean }>`
     color: #111827;
     border: 1px solid #E5E7EB;
     border-bottom-left-radius: 4px;
-    box-shadow: 0 1px 2px ${rgba("#000", 0.05)};
+    box-shadow: 0 1px 2px ${rgba('#000', 0.05)};
   `}
   
   .message-time {
@@ -157,7 +157,7 @@ export const MessageBubble = styled.div<{ $isUser: boolean }>`
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background-color: ${(props) => (props.$isUser ? "#fff" : "#6366F1")};
+      background-color: ${(props) => (props.$isUser ? '#fff' : '#6366F1')};
       animation: pulse 1.2s infinite ease-in-out;
 
       &:nth-child(2) {
@@ -209,7 +209,7 @@ export const ChatInputArea = styled.div`
       &:focus {
         outline: none;
         border-color: #6366f1;
-        box-shadow: 0 0 0 2px ${rgba("#6366F1", 0.1)};
+        box-shadow: 0 0 0 2px ${rgba('#6366F1', 0.1)};
       }
 
       &::placeholder {

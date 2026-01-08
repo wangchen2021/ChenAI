@@ -8,8 +8,8 @@ export enum HTTP_STATUS_CODE {
 }
 
 export enum HTTP_RES_MSG {
-  SUCCESS = "success",
-  SERVER_UNKNOWN_ERROR = "server unknown error",
+  SUCCESS = 'success',
+  SERVER_UNKNOWN_ERROR = 'server unknown error',
 }
 
 export interface Http_Response<T> {

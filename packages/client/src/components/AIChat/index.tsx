@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 import {
   AIChatGlobalStyle,
   ChatContainer,
@@ -6,10 +6,10 @@ import {
   ChatContent,
   MessageBubble,
   ChatInputArea,
-} from "./styles";
-import type { getAIStreamResReqParams } from "@chen/shared";
-import { useSSE } from "../../hooks/useSSE";
-import MarkdownRenderer from "../Markdown";
+} from './styles';
+import type { getAIStreamResReqParams } from '@chen/shared';
+import { useSSE } from '../../hooks/useSSE';
+import MarkdownRenderer from '../Markdown';
 
 // 定义消息类型
 interface Message {
@@ -23,7 +23,7 @@ interface Message {
 const AIChat: React.FC = () => {
   // 状态管理
   const [messages, setMessages] = useState<Message[]>([]);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [isSending, setIsSending] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const messageId = useRef(0);
@@ -48,13 +48,13 @@ const AIChat: React.FC = () => {
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setInputValue("");
+    setInputValue('');
     setIsSending(true);
 
     // 添加AI加载中消息
     const loadingMessage: Message = {
       id: String(messageId.current++),
-      content: "",
+      content: '',
       isUser: false,
       timestamp: new Date(),
       isLoading: true,
@@ -67,7 +67,7 @@ const AIChat: React.FC = () => {
       const param: getAIStreamResReqParams = {
         text: inputValue,
       };
-      sendRequest("/openAI/getTextRes", param, {
+      sendRequest('/openAI/getTextRes', param, {
         onChunk: (res) => {
           // 替换加载中消息为实际AI回复
           setMessages((prev) =>
@@ -90,13 +90,13 @@ const AIChat: React.FC = () => {
           msg.id === loadingMessage.id
             ? {
                 ...msg,
-                content: "抱歉，请求失败，请稍后重试。",
+                content: '抱歉，请求失败，请稍后重试。',
                 isLoading: false,
               }
             : msg,
         ),
       );
-      console.error("发送消息失败:", error);
+      console.error('发送消息失败:', error);
     } finally {
       setIsSending(false);
     }
@@ -104,7 +104,7 @@ const AIChat: React.FC = () => {
 
   // 清空输入框
   const handleClearInput = () => {
-    setInputValue("");
+    setInputValue('');
   };
 
   // 清空所有消息
@@ -114,7 +114,7 @@ const AIChat: React.FC = () => {
 
   // 处理回车发送（Shift+回车换行）
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
@@ -195,11 +195,7 @@ const AIChat: React.FC = () => {
         <ChatContent ref={contentRef}>
           {messages.length === 0 ? (
             <div className="empty-state">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM14 9H9V15H14V9Z"
                   fill="currentColor"
@@ -222,13 +218,9 @@ const AIChat: React.FC = () => {
                     {message.isUser ? (
                       <div>{message.content}</div>
                     ) : (
-                      <MarkdownRenderer
-                        content={message.content}
-                      ></MarkdownRenderer>
+                      <MarkdownRenderer content={message.content}></MarkdownRenderer>
                     )}
-                    <div className="message-time">
-                      {message.timestamp.toLocaleTimeString()}
-                    </div>
+                    <div className="message-time">{message.timestamp.toLocaleTimeString()}</div>
                   </>
                 )}
               </MessageBubble>
@@ -251,7 +243,7 @@ const AIChat: React.FC = () => {
               onClick={handleSendMessage}
               disabled={!inputValue.trim() || isSending}
             >
-              {isSending ? "发送中..." : "发送"}
+              {isSending ? '发送中...' : '发送'}
             </button>
           </div>
           <div className="input-actions">
