@@ -1,0 +1,8 @@
+.vscode
+logs
+**/dist
+**/node_modules
+**/.git
+**/.hg
+
+
