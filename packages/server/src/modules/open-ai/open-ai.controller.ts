@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { OpenAiService } from './open-ai.service';
-import { type getAIStreamResReqParams } from '@chen/shared';
 import { type Request, type Response } from 'express';
-import { ApiHeader, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiHeader, ApiTags } from '@nestjs/swagger';
 import { HttpUtil } from 'src/common/utils/http/HttpUtil';
+import { GetTextReqDto } from './dto/get-text-req.dto';
 
 @ApiTags('openAI')
 @Controller('openAI')
@@ -27,11 +27,12 @@ export class OpenAiController {
     name: '获取AI文本回复',
     description: '输入文本，获取AI文本stream流回复',
   })
+  @ApiBody({
+    type: GetTextReqDto,
+    description: '用户输入文本',
+  })
   @Post('getTextRes')
-  async getAIStreamRes(
-    @Body() body: getAIStreamResReqParams,
-    @Res() res: Response,
-  ) {
+  async getAIStreamRes(@Body() body: GetTextReqDto, @Res() res: Response) {
     const { text } = body;
     this.httpUtil.openCustomSSE(res);
     const stream = await this.openAiService.getOpenAIStreamRes(text);

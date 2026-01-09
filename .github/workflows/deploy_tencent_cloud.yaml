@@ -1,9 +1,9 @@
-name: Frontend Auto Deploy to Tencent Cloud (BtPanel)
-run-name: ${{ github.actor }} 正在通过宝塔部署 pnpm+Vite 项目 🚀
+name: Auto Deploy to Tencent Cloud (BtPanel)
+run-name: ${{ github.actor }} 正在通过宝塔部署 chenAI 项目 🚀
 on:
   # 核心：仅监听 main 分支的 Release 发布事件
-  # release:
-  #   types: [published] # 仅当 Release 被「发布」（而非草稿/删除）时触发
+  release:
+    types: [published] # 仅当 Release 被「发布」（而非草稿/删除）时触发
 
 jobs:
   Deploy-to-Tencent-Cloud-Bt:
@@ -34,7 +34,7 @@ jobs:
 
       # 步骤4：用 pnpm 安装项目依赖
       - name: Install Project Dependencies
-        run: pnpm install-all
+        run: pnpm install:all
       - run: echo "🖥️ 项目依赖安装完成，准备构建."
 
       # 步骤5：用 pnpm 构建 Vite 项目

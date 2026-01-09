@@ -4,7 +4,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 export function setupSwagger(app: INestApplication<any>) {
   const config = new DocumentBuilder()
     .setTitle('Chen AI Server')
-    .setDescription('The cats API description')
+    .setDescription('The ChenAI API description')
     .setVersion('1.0')
     .addTag('chen')
     .build();

@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { VersioningType } from '@nestjs/common';
+import { VersioningType, ValidationPipe } from '@nestjs/common';
 import cors from 'cors';
 import { ConfigService } from '@nestjs/config';
 import { setupSwagger } from './config/swagger/swagger.config';
@@ -24,6 +24,7 @@ async function bootstrap() {
     app.enableVersioning({
       type: VersioningType.URI, //版本控制
     });
+    app.useGlobalPipes(new ValidationPipe());
     await app.listen(PORT ?? 3000, () => {
       console.log(`✅ ${NODE_ENV} 环境服务启动成功，端口：${PORT}`);
     });

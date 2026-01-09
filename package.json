@@ -7,7 +7,7 @@
   "scripts": {
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "install:all": "pnpm install --recursive",
-    "git:commit": "cz",
+    "git:commit": "git add . && cz",
     "git:push": "git push",
     "release": "release-it",
     "prepare": "husky"

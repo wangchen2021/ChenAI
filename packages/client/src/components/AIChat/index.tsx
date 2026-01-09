@@ -82,24 +82,31 @@ const AIChat: React.FC = () => {
             ),
           );
         },
+        onError: (err) => {
+          errorResponse(err, loadingMessage);
+        },
       });
-    } catch (error) {
+    } catch (err) {
       // 错误处理
-      setMessages((prev) =>
-        prev.map((msg) =>
-          msg.id === loadingMessage.id
-            ? {
-                ...msg,
-                content: '抱歉，请求失败，请稍后重试。',
-                isLoading: false,
-              }
-            : msg,
-        ),
-      );
-      console.error('发送消息失败:', error);
+      errorResponse(err, loadingMessage);
     } finally {
       setIsSending(false);
     }
+  };
+
+  const errorResponse = (error: any, loadingMessage: Message) => {
+    setMessages((prev) =>
+      prev.map((msg) =>
+        msg.id === loadingMessage.id
+          ? {
+              ...msg,
+              content: `抱歉，请求失败，请稍后重试。${error}`,
+              isLoading: false,
+            }
+          : msg,
+      ),
+    );
+    console.error('发送消息失败:', error);
   };
 
   // 清空输入框
